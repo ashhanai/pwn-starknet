@@ -232,12 +232,7 @@ pub mod PwnLoan {
         /// # Errors
         /// - `TOKEN_NOT_OWNED`: If the specified token is not owned by the caller.
         fn tokenUri(self: @ContractState, loan_id: felt252) -> ByteArray {
-            self.erc721._require_owned(loan_id.into());
-
-            IPwnLoadMetadataProviderDispatcher {
-                contract_address: self.loan_contract.read(loan_id)
-            }
-                .loan_metadata_uri()
+            self.token_uri(loan_id)
         }
 
         fn hub(self: @ContractState) -> ContractAddress {

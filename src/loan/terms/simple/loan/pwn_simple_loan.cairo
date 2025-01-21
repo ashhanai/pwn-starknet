@@ -406,6 +406,16 @@ pub mod PwnSimpleLoan {
                 Err::INVALID_EXTENSION_PROPOSER(allowed: extension.proposer, current: caller);
             }
 
+            let loan = self.loans.read(extension.loan_id);
+            let loan_owner = ERC721ABIDispatcher {
+                contract_address: self.loan_token.read().contract_address
+            }
+                .owner_of(extension.loan_id.try_into().expect('extend_loan'));
+
+            if (caller != loan_owner && caller != loan.borrower) {
+                Err::INVALID_EXTENSION_CALLER();
+            }
+
             let extension_hash = self.get_extension_hash(extension);
             self.extension_proposal_made.write(extension_hash, true);
             self

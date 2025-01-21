@@ -2893,6 +2893,16 @@ mod make_extension_proposal {
     }
 
     #[test]
+    #[should_panic]
+    fn test_should_fail_when_proposer_not_loan_owner_nor_borrower() {
+        let setup = setup();
+        let mut extension = setup.extension;
+        extension.proposer = starknet::contract_address_const::<'randomProposer'>();
+        cheat_caller_address(setup.loan.contract_address, extension.proposer, CheatSpan::TargetCalls(1));
+        setup.loan.make_extension_proposal(extension);
+    }
+
+    #[test]
     fn test_should_store_made_flag() {
         let setup = setup();
         cheat_caller_address(

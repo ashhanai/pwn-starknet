@@ -557,14 +557,14 @@ pub mod PwnSimpleLoan {
         ///
         /// # Arguments
         ///
-        /// - `calladata`: The lender's specifications.
+        /// - `lender_spec`: The lender's specifications.
         ///
         /// # Returns
         ///
         /// - The computed hash as `felt252`.
-        fn get_lender_spec_hash(self: @ContractState, calladata: LenderSpec) -> felt252 {
+        fn get_lender_spec_hash(self: @ContractState, lender_spec: LenderSpec) -> felt252 {
             let hash_elements: Array<felt252> = array![
-                calladata.source_of_funds.try_into().expect('get_lender_spec_hash')
+                lender_spec.source_of_funds.try_into().expect('get_lender_spec_hash')
             ];
             poseidon_hash_span(hash_elements.span())
         }
@@ -978,13 +978,13 @@ pub mod PwnSimpleLoan {
                 return loan.fixed_interest_amount;
             }
             let current_timestamp = starknet::get_block_timestamp();
-            let accuring_minutes: u64 = (current_timestamp - loan.start_timestamp) / MINUTE;
-            let interest_amount: u256 = (accuring_minutes * loan.accruing_interest_APR.into())
+            let accruing_minutes: u64 = (current_timestamp - loan.start_timestamp) / MINUTE;
+            let interest_amount: u256 = (accruing_minutes * loan.accruing_interest_APR.into())
                 .into();
-            let accured_interest = math::mul_div(
+            let accrued_interest = math::mul_div(
                 loan.principal_amount, interest_amount, ACCRUING_INTEREST_APR_DENOMINATOR.into()
             );
-            loan.fixed_interest_amount + accured_interest
+            loan.fixed_interest_amount + accrued_interest
         }
 
         fn _settle_loan_claim(

@@ -151,8 +151,8 @@ pub mod PwnLoan {
             let caller = get_caller_address();
             only_active_loan(ref self, caller);
 
-            self.last_loan_id.write(self.last_loan_id.read() + 1);
-            let loan_id: felt252 = self.last_loan_id.read();
+            let loan_id: felt252 = self.last_loan_id.read() + 1;
+            self.last_loan_id.write(loan_id);
 
             self.loan_contract.write(loan_id, caller);
 

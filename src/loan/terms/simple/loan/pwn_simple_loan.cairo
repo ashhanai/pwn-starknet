@@ -90,7 +90,8 @@ pub mod PwnSimpleLoan {
     pub const MAX_ACCRUING_INTEREST_APR: u32 = 16000000;
     pub const MINUTE: u64 = 60;
     pub const MINUTES_IN_YEAR: u64 = 525_600;
-    pub const ACCRUING_INTEREST_APR_DENOMINATOR: u64 = 5256000000;
+    // @note: ACCRUING_INTEREST_APR_DECIMALS * MINUTES_IN_YEAR * 100
+    pub const ACCRUING_INTEREST_APR_DENOMINATOR: u64 = 100 * MINUTES_IN_YEAR * 100; // 5256000000
     pub const VERSION: felt252 = '1.2';
     // @note: duration in seconds
 

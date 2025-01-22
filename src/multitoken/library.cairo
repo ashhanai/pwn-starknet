@@ -194,6 +194,11 @@ pub mod MultiToken {
         /// - `self`: The asset being approved.
         /// - `target`: The address being approved for transfer.
         fn approve_asset(self: @Asset, target: ContractAddress) {
+            if *self.category != Category::ERC20
+                && *self.category != Category::ERC721
+                && *self.category != Category::ERC1155 {
+                Err::UNSUPPORTED_CATEGORY(*self.category);
+            }
             match self.category {
                 Category::ERC20 => {
                     ERC20ABIDispatcher { contract_address: *self.asset_address }
@@ -297,6 +302,11 @@ pub mod MultiToken {
     }
 
     fn _check_category_via_src5(asset: Asset) -> bool {
+        if asset.category != Category::ERC20
+            && asset.category != Category::ERC721
+            && asset.category != Category::ERC1155 {
+            Err::UNSUPPORTED_CATEGORY(asset.category);
+        }
         match asset.category {
             Category::ERC20 => {
                 // NOTE: we don't check interface id since no token uses it on Starket
@@ -315,6 +325,11 @@ pub mod MultiToken {
     }
 
     fn _check_format(asset: Asset) -> bool {
+        if asset.category != Category::ERC20
+            && asset.category != Category::ERC721
+            && asset.category != Category::ERC1155 {
+            Err::UNSUPPORTED_CATEGORY(asset.category);
+        }
         match asset.category {
             Category::ERC20 => { if asset.id != 0 {
                 return false;
@@ -528,5 +543,3 @@ impl CategoryEq of PartialEq<MultiToken::Category> {
     }
 }
 // NOTE: not sure if _transfer_with_calldata makes sense on starknet
-
-

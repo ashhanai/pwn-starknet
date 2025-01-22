@@ -951,7 +951,7 @@ pub mod PwnSimpleLoan {
             }
         }
 
-        fn _check_loan_can_be_repaid(ref self: ContractState, status: u8, default_timestamp: u64) {
+        fn _check_loan_can_be_repaid(self: @ContractState, status: u8, default_timestamp: u64) {
             if (status == 0) {
                 Err::NON_EXISTING_LOAN();
             }
@@ -1027,7 +1027,7 @@ pub mod PwnSimpleLoan {
             loan.status
         }
 
-        fn _check_valid_asset(ref self: ContractState, asset: Asset) {
+        fn _check_valid_asset(self: @ContractState, asset: Asset) {
             if (!self.get_is_valid_asset(asset)) {
                 Err::INVALID_MULTITOKEN_ASSET(
                     category: asset.category.into(),

@@ -47,6 +47,7 @@ pub trait ISimpleLoanAcceptProposal<TState> {
 pub mod SimpleLoanProposalComponent {
     use alexandria_math::keccak256::keccak256;
     use core::poseidon::poseidon_hash_span;
+    use pwn::ContractAddressDefault;
     use pwn::config::interface::{IPwnConfigDispatcher, IPwnConfigDispatcherTrait};
     use pwn::hub::{pwn_hub_tags, pwn_hub::{IPwnHubDispatcher, IPwnHubDispatcherTrait}};
     use pwn::interfaces::fingerprint_computer::{
@@ -290,7 +291,7 @@ pub mod SimpleLoanProposalComponent {
                 );
             }
 
-            if proposal.allowed_acceptor != starknet::contract_address_const::<0>()
+            if proposal.allowed_acceptor != Default::default()
                 && acceptor != proposal.allowed_acceptor {
                 Err::CALLER_NOT_ALLOWED_ACCEPTOR(acceptor, proposal.allowed_acceptor);
             }
@@ -323,7 +324,7 @@ pub mod SimpleLoanProposalComponent {
                         .get_state_fingerprint_computer(proposal.collateral_address)
                         .contract_address
                 };
-                if computer.contract_address != starknet::contract_address_const::<0>() {
+                if computer.contract_address != Default::default() {
                     current_fingerprint = computer
                         .compute_state_fingerprint(
                             proposal.collateral_address, proposal.collateral_id

@@ -2898,7 +2898,9 @@ mod make_extension_proposal {
         let setup = setup();
         let mut extension = setup.extension;
         extension.proposer = starknet::contract_address_const::<'randomProposer'>();
-        cheat_caller_address(setup.loan.contract_address, extension.proposer, CheatSpan::TargetCalls(1));
+        cheat_caller_address(
+            setup.loan.contract_address, extension.proposer, CheatSpan::TargetCalls(1)
+        );
         setup.loan.make_extension_proposal(extension);
     }
 

@@ -50,7 +50,8 @@ pub trait IPwnLoadMetadataProvider<TState> {
 pub mod PwnLoan {
     use openzeppelin::introspection::src5::SRC5Component;
     use openzeppelin::token::erc721::{
-        erc721::{ERC721Component, ERC721HooksEmptyImpl}, interface::{IERC721_ID, IERC721_METADATA_ID}
+        erc721::{ERC721Component, ERC721HooksEmptyImpl},
+        interface::{IERC721_ID, IERC721_METADATA_ID}
     };
     use pwn::hub::{pwn_hub_tags, pwn_hub::{IPwnHubDispatcher, IPwnHubDispatcherTrait}};
 

@@ -164,9 +164,7 @@ pub mod PwnConfig {
             fee: u16,
             fee_collector: ContractAddress
         ) {
-            assert!(
-                owner != Default::default(), "Owner cannot be zero address"
-            );
+            assert!(owner != Default::default(), "Owner cannot be zero address");
             self.ownable.initializer(owner);
             self._set_fee_collector(fee_collector);
             self._set_fee(fee);

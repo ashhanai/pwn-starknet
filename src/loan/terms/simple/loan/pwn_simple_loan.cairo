@@ -184,9 +184,7 @@ pub mod PwnSimpleLoan {
         let hub_dispatcher = IPwnHubDispatcher { contract_address: hub };
         let loan_token_dispatcher = IPwnLoanDispatcher { contract_address: loan_token };
         let config_dispatcher = IPwnConfigDispatcher { contract_address: config };
-        let revoked_nonce_dispatcher = IRevokedNonceDispatcher {
-            contract_address: revoked_nonce
-        };
+        let revoked_nonce_dispatcher = IRevokedNonceDispatcher { contract_address: revoked_nonce };
         let category_registry_dispatcher = IMultiTokenCategoryRegistryDispatcher {
             contract_address: category_registry
         };

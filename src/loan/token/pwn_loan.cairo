@@ -210,7 +210,7 @@ pub mod PwnLoan {
         /// A `ByteArray` containing the metadata URI of the token.
         ///
         /// # Errors
-        /// - `TOKEN_NOT_OWNED`: If the specified token is not owned by the caller.
+        /// - `INVALID_TOKEN_ID`: If the specified token id does not exist.
         fn token_uri(self: @ContractState, loan_id: felt252) -> ByteArray {
             self.erc721._require_owned(loan_id.into());
 
@@ -231,7 +231,7 @@ pub mod PwnLoan {
         /// A `ByteArray` containing the metadata URI of the token.
         ///
         /// # Errors
-        /// - `TOKEN_NOT_OWNED`: If the specified token is not owned by the caller.
+        /// - `INVALID_TOKEN_ID`: If the specified token id does not exist.
         fn tokenUri(self: @ContractState, loan_id: felt252) -> ByteArray {
             self.token_uri(loan_id)
         }

@@ -256,7 +256,7 @@ pub fn setup() -> Setup {
         BoundedInt::<u32>::max()
     );
 
-    mock_call(loan_token_address, selector!("owner_of"), lender_address, 1);
+    mock_call(loan_token_address, selector!("owner_of"), lender_address, BoundedInt::<u32>::max());
 
     let loan_id = 42;
     let extension = types::ExtensionProposal {
@@ -265,7 +265,7 @@ pub fn setup() -> Setup {
         compensation_amount: 100,
         duration: 2 * DAY,
         expiration: simple_loan.default_timestamp,
-        proposer: borrower_address,
+        proposer: lender_address,
         nonce_space: 0,
         nonce: 1,
     };

@@ -53,7 +53,7 @@ pub mod SimpleLoanProposalComponent {
     use pwn::interfaces::fingerprint_computer::{
         IStateFingerpringComputerDispatcher, IStateFingerpringComputerDispatcherTrait
     };
-    use pwn::loan::lib::{merkle_proof, merkle_proof::abi_encoded_packed};
+    use pwn::loan::lib::merkle_proof;
     use pwn::nonce::revoked_nonce::{
         IRevokedNonceDispatcher, IRevokedNonceDispatcherTrait, RevokedNonce
     };

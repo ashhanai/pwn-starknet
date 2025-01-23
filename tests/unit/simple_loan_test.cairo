@@ -2307,7 +2307,7 @@ mod loan_repayment_amount {
     #[test]
     fn test_should_return_zero_when_loan_does_not_exist() {
         let setup = setup();
-        assert_eq!(setup.loan.get_loan_repayment_amount(setup.loan_id), 0);
+        assert_eq!(setup.loan.get_loan_repayment_amount(setup.loan_id + 1), 0);
     }
 
     #[test]
@@ -3593,7 +3593,7 @@ mod get_state_fingerprint {
     #[test]
     fn test_should_return_zero_if_loan_does_not_exist() {
         let setup = super::setup();
-        let fingerprint = setup.loan.get_state_fingerprint(setup.loan_id);
+        let fingerprint = setup.loan.get_state_fingerprint(setup.loan_id + 1);
         assert_eq!(fingerprint, 0, "State fingerprint not zero");
     }
 

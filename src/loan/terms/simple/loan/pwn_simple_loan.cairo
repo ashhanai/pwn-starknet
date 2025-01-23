@@ -181,7 +181,22 @@ pub mod PwnSimpleLoan {
         revoked_nonce: ContractAddress,
         category_registry: ContractAddress,
     ) {
-        self.initializer(hub, loan_token, config, revoked_nonce, category_registry);
+        let hub_dispatcher = IPwnHubDispatcher { contract_address: hub };
+        let loan_token_dispatcher = IPwnLoanDispatcher { contract_address: loan_token };
+        let config_dispatcher = IPwnConfigDispatcher { contract_address: config };
+        let revoked_nonce_dispatcher = IRevokedNonceDispatcher {
+            contract_address: revoked_nonce
+        };
+        let category_registry_dispatcher = IMultiTokenCategoryRegistryDispatcher {
+            contract_address: category_registry
+        };
+        self.hub.write(hub_dispatcher);
+        self.loan_token.write(loan_token_dispatcher);
+        self.config.write(config_dispatcher);
+        self.revoked_nonce.write(revoked_nonce_dispatcher);
+        self.category_registry.write(category_registry_dispatcher);
+        self.src5.register_interface(IERC1155_RECEIVER_ID);
+        self.src5.register_interface(IERC721_RECEIVER_ID);
     }
 
     #[abi(embed_v0)]
@@ -755,32 +770,6 @@ pub mod PwnSimpleLoan {
 
     #[generate_trait]
     pub impl Private of PrivateTrait {
-        fn initializer(
-            ref self: ContractState,
-            hub: ContractAddress,
-            loan_token: ContractAddress,
-            config: ContractAddress,
-            revoked_nonce: ContractAddress,
-            category_registry: ContractAddress
-        ) {
-            let hub_dispatcher = IPwnHubDispatcher { contract_address: hub };
-            let loan_token_dispatcher = IPwnLoanDispatcher { contract_address: loan_token };
-            let config_dispatcher = IPwnConfigDispatcher { contract_address: config };
-            let revoked_nonce_dispatcher = IRevokedNonceDispatcher {
-                contract_address: revoked_nonce
-            };
-            let category_registry_dispatcher = IMultiTokenCategoryRegistryDispatcher {
-                contract_address: category_registry
-            };
-            self.hub.write(hub_dispatcher);
-            self.loan_token.write(loan_token_dispatcher);
-            self.config.write(config_dispatcher);
-            self.revoked_nonce.write(revoked_nonce_dispatcher);
-            self.category_registry.write(category_registry_dispatcher);
-            self.src5.register_interface(IERC1155_RECEIVER_ID);
-            self.src5.register_interface(IERC721_RECEIVER_ID);
-        }
-
         fn _check_refinance_loan_terms(
             ref self: ContractState, loan_id: felt252, loan_terms: Terms
         ) {

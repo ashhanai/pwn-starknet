@@ -265,10 +265,12 @@ pub fn setup() -> Setup {
         compensation_amount: 100,
         duration: 2 * DAY,
         expiration: simple_loan.default_timestamp,
-        proposer: lender_address,
+        proposer: borrower_address,
         nonce_space: 0,
         nonce: 1,
     };
+
+    store_loan(loan.contract_address, loan_id, simple_loan);
 
     Setup {
         hub,
@@ -2980,15 +2982,18 @@ mod extend_loan {
     fn test_should_fail_when_loan_does_not_exist() {
         let setup = setup();
 
+        let mut extension = setup.extension;
+        extension.loan_id += 1;
+
         cheat_caller_address(
             setup.loan.contract_address, setup.borrower.contract_address, CheatSpan::TargetCalls(1)
         );
-        setup.loan.make_extension_proposal(setup.extension);
+        setup.loan.make_extension_proposal(extension);
 
         cheat_caller_address(
             setup.loan.contract_address, setup.lender.contract_address, CheatSpan::TargetCalls(1)
         );
-        setup.loan.extend_loan(setup.extension);
+        setup.loan.extend_loan(extension);
     }
 
     #[test]
